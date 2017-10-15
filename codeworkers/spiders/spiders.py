@@ -1,4 +1,4 @@
- import datetime
+import datetime
 
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.linkextractors import LinkExtractor
@@ -25,7 +25,7 @@ class CompuTrabajoSpider(CrawlSpider):
     def parse_item(self, response):
         l = ItemLoader(item=CodeworkersItem(), response=response)
 
-        l.add_xpath('titulo', '//*[@id="MainContainer"]//h1')
+        l.add_xpath('titulo', '//*[@id="MainContainer"]//h1/text()')
         
         l.add_value('url', response.url)
         self.item_count += 1
@@ -51,7 +51,7 @@ class BumeranSpider(CrawlSpider):
     def parse_item(self, response):
         l = ItemLoader(item=CodeworkersItem(), response=response)
 
-        l.add_xpath('titulo', '//h1[@class="aviso_title"]')
+        l.add_xpath('titulo', 'normalize-space(//h1[@class="aviso_title"])')
         l.add_value('url', response.url)
         self.item_count += 1
         if self.item_count > 5:
@@ -76,7 +76,7 @@ class ZonaJobsSpider(CrawlSpider):
     def parse_item(self, response):
         l = ItemLoader(item=CodeworkersItem(), response=response)
 
-        l.add_xpath('titulo', '//h1[@class="aviso_title"]')
+        l.add_xpath('titulo', 'normalize-space(//h1[@class="aviso_title"])')
         l.add_value('url', response.url)
         self.item_count += 1
         if self.item_count > 5:
@@ -100,7 +100,7 @@ class LaWebDelProgramadorSpider(CrawlSpider):
     def parse_item(self, response):
         l = ItemLoader(item=CodeworkersItem(), response=response)
 
-        l.add_xpath('titulo', '//h1')
+        l.add_xpath('titulo', '//h1/text()')
         l.add_value('url', response.url)
         self.item_count += 1
         if self.item_count > 5:
