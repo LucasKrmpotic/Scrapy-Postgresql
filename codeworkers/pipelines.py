@@ -14,15 +14,15 @@ class CodeworkersPipeline(object):
         self.Session = sessionmaker(bind=engine)
 
     def _compara_fechas(self, tiempo, fecha):
-        return tiempo.year == fecha.year and tiempo.month == fecha.month and tiempo.day == fecha.day
+        return tiempo[0].year == fecha[0].year and tiempo[0].month == fecha[0].month and tiempo[0].day == fecha[0].day
 
     def process_item(self, item, spider):
+
         if self._compara_fechas(item['tiempo_publicacion'], item['marca_tiempo']):
             session = self.Session()
             puesto = OfertaEmpleo(**item)
 
             try:
-                #import ipdb; ipdb.set_trace()
                 session.add(puesto)
                 session.commit()
             except:
@@ -31,5 +31,5 @@ class CodeworkersPipeline(object):
             finally:
                 session.close()
             return item
-        else:
-            raise DropItem()
+        
+        raise DropItem()

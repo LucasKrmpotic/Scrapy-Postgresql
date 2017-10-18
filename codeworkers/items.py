@@ -26,10 +26,6 @@ class CodeworkersItem(Item):
         input_processor=MapCompose(remove_tags),
         output_processor=Join(),
     )
-    remoto = Field(
-        input_processor=MapCompose(remove_tags),
-        output_processor=Join(),
-    )
     empresa = Field(
         input_processor=MapCompose(remove_tags),
         output_processor=Join(),

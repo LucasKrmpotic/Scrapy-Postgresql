@@ -31,10 +31,9 @@ class OfertaEmpleo(DeclarativeBase):
     
     # Data de la oferta de empleo
     titulo = Column('titulo', String)
-    ubicacion = Column('ubicacion', String, nullable=True)
+    ubicacion = Column('ubicacion', String, default="sin informacion")
     empresa = Column('empresa', String, nullable=True)
-    tiempo_publicacion = Column('tiempo_publicacion', String) 
-    descripcion = Column('descripcion', String)
+    tiempo_publicacion = Column('tiempo_publicacion', String)
 
     # Metadata de la oferta de empleo
     sitio = Column('sitio', String)
