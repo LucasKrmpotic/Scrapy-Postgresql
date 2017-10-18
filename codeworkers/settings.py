@@ -1,4 +1,3 @@
- 
 # -*- coding: utf-8 -*-
 
 # Scrapy settings for codeworkers project
@@ -71,7 +70,7 @@ ITEM_PIPELINES = {
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': 'localhost',
+    'host': 'db',
     'port': '5432',
     'username': 'postgres',
     'password': 'postgres',
