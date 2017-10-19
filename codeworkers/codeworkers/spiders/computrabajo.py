@@ -18,12 +18,6 @@ class CompuTrabajoSpider(CrawlSpider):
     start_urls = (
         'https://www.computrabajo.com.ar/trabajo-de-programador',
     )
-    
-    # rules = (
-    #     Rule(LinkExtractor(restrict_xpaths='//li[@class="siguiente"]/a')),
-    #     Rule(LinkExtractor(restrict_xpaths='//a[@class="js-o-link"]'),
-    #          callback='parse_item')
-    # )
 
     def _parse_fecha(self, value):
         """ Si 'value' contiene la palabra 'hoy' retorna la fecha actual
@@ -68,7 +62,8 @@ class CompuTrabajoSpider(CrawlSpider):
         l.add_xpath('url', './/h2/a/@href',
             MapCompose(lambda i: self.allowed_domains[0] + str(i))
         )
+        # Para limitar la araña en desarrollo
         self.item_count += 1
-        if self.item_count > 5:
+        if self.item_count > 50:
             raise CloseSpider('item_exceeded')
         return l.load_item()

@@ -80,8 +80,8 @@ class LaWebDelProgramadorSpider(CrawlSpider):
         l.add_xpath('url', './/h2/a/@href',
             MapCompose(lambda i: self.allowed_domains[0] + str(i))
         )
+        # Para limitar la araña en desarrollo
         self.item_count += 1
-        if self.item_count > 25:
+        if self.item_count > 50:
             raise CloseSpider('item_exceeded')
         return l.load_item()
-#div/table/tbody/tr[1]/td[2]

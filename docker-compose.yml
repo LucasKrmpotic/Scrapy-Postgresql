@@ -6,7 +6,7 @@ services:
             context: ./db
         restart: always
         ports: 
-            - "5432:5432"
+            - "2345:5432"
         volumes: 
             - "./db/.dbdata:/var/lib/postgresql/data"
         environment:
@@ -16,8 +16,8 @@ services:
 
     spiders:
         build: 
-            context: ./crawler
-        restart: unless-stopped
+            context: ./codeworkers
+            #restart: unless-stopped
         environment:
             POSTGRES_USER: postgres 
             POSTGRES_PASSWORD: postgres 
@@ -28,7 +28,7 @@ services:
     app:
         build: 
             context: ./api
-        restart: always
+        restart: unless-stopped
         ports: 
             - "3000:3000"
         environment:

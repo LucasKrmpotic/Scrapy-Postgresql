@@ -12,7 +12,7 @@ const pool_conf = {
 
 export function listar (req, res, next) {
     let pool = new Pool(pool_conf)
-    pool.query('SELECT * FROM oferta_empleo')
+    pool.query('SELECT id, titulo, ubicacion, empresa, sitio, url FROM oferta_empleo')
       .then(result => res.json(result))
       .catch(e => console.error(e.stack))
     pool.end()
@@ -20,7 +20,7 @@ export function listar (req, res, next) {
 
 export function buscar (req, res, next) {
   let pool = new Pool(pool_conf)
-  pool.query('SELECT * FROM oferta_empleo WHERE id = $1', [req.params.id])
+  pool.query('SELECT id, titulo, ubicacion, empresa, sitio, url FROM oferta_empleo WHERE id = $1', [req.params.id])
     .then(result => res.json(result))
     .catch(e => console.error(e.stack))
     pool.end()

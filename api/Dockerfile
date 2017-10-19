@@ -8,4 +8,4 @@ RUN apt-get install -y nodejs build-essential
 RUN npm install -g n gulp gulp-cli semver && n lts
 COPY . .
 RUN npm install
-CMD ["gulp"]
+CMD ["node", "server"]

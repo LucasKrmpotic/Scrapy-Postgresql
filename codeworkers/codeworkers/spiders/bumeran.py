@@ -20,11 +20,19 @@ class BumeranSpider(CrawlSpider):
     )
     
     def _parse_fecha(self, cadena):
-        """ Si 'cadena' contiene la palabra 'horas' o 'minutos' retorna la fecha actual
-            si no la contiene retorna una fecha anterior """
+        """retorna la fecha actual si 'cadena' contiene la palabra 'horas' o 'minutos' 
+        y una fecha anterior si no
+
+        Args:
+            cadena (string): Una cadena que contiene informacion para deducir la fecha
+        
+        Returns:
+            una fecha
+        """
         return datetime.datetime.now() if re.match('.*(horas|minutos).*', str(cadena)) else datetime.datetime.now() - datetime.timedelta(days=3)
 
     def parse(self, response):
+
         # Get the next index URLs and yield Requests
         next_selector = response.xpath('//ul[@class="pagination col-md-12"]/li[8]/a//@href')
         for url in next_selector.extract():
@@ -60,12 +68,8 @@ class BumeranSpider(CrawlSpider):
         l.add_xpath('url', './/div/a[1]//@href',
             MapCompose(lambda i: self.allowed_domains[0] + str(i))
         )
+        # Para limitar la araña en desarrollo
         self.item_count += 1
-        if self.item_count > 40:
+        if self.item_count > 50:
             raise CloseSpider('item_exceeded')
         return l.load_item()
-
-
-"""
-//div[@class="list-jobs col-md-12 pd0"]/div/div[1]//span[@class="fecha
-"""

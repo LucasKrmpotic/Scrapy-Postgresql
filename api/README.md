@@ -38,4 +38,4 @@ La aplicación consume datos de una base poblada por un crawler que extrae infor
 * packege.json
 * README.md
 * server.js: registra uso de babel y llama a /app/app.js
-
+ 

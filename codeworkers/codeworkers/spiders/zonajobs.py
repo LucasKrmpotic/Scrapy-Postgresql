@@ -11,7 +11,6 @@ from codeworkers.items import CodeworkersItem
 class ZonaJobsSpider(BumeranSpider):
     """ Araña para extraer ofertas de trabajo del sitio zonajobs """
     name = "zonajobs"
-    item_count = 0
     allowed_domains = ["www.zonajobs.com.ar"]
     start_urls = (
         'https://www.zonajobs.com.ar/ofertas-de-trabajo-programador.html',

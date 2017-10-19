@@ -57,7 +57,9 @@ class StackOverflowSpider(CrawlSpider):
         l.add_value('sitio', self.allowed_domains)
         l.add_value('marca_tiempo', datetime.datetime.now())
         l.add_xpath('url', './/h2/a//@href')
+
+        # Para limitar la araña en desarrollo
         self.item_count += 1
-        if self.item_count > 5:
+        if self.item_count > 50:
             raise CloseSpider('item_exceeded')
         return l.load_item()
