@@ -1,14 +1,21 @@
 FROM python
 RUN apt-get update -q
-# RUN apt-get install -y cron
-# RUN /etc/init.d/cron start > dev/null
+
+RUN apt-get install -y cron
+
+ADD scrapy-crawl.sh .
+RUN chmod 750 scrapy-crawl.sh
+
+ADD crontab /var/spool/cron/crontabs/root
+RUN chmod 0600 /var/spool/cron/crontabs/root
+RUN touch /var/log/scrapy-cron.log
+
 COPY . .
 RUN pip install -r requirements.txt
 
-# Se definen las 11:00hs como hora de inicio del crawling
-# RUN echo "0 11  * * * root /home/cron-job.sh" >> /etc/crontab 
-# RUN /etc/init.d/cron restart
+CMD ["cron", "&&", "tail", "-f", "/var/log/scrapy-cron.log"]
+# CMD ["/etc/init.d/cron", "restart"]
 
 # para probar el funcionamiento inmediato de docker-compose up comentar 
 # lineas anteriores y descomentar la siguiente
-CMD ["bash", "cron-job.sh"]
+# CMD ["bash", "cron-job.sh"]

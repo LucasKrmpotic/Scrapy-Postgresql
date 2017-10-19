@@ -1,0 +1,1 @@
+30 20  * * * root /scrapy-crawl.sh >> /var/log/scrapy-cron.log 2 >&1
