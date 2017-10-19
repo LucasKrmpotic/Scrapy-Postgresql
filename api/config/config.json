@@ -1,0 +1,11 @@
+{
+    "appName": "api",
+    "servePort": 3000,
+    "db": {
+        "host": "db",
+        "user": "postgres",
+        "password": "postgres",
+        "database": "codeworkers",
+        "port": 5432
+    }
+}

@@ -2,9 +2,11 @@ version: '3.1'
 
 services:
     db:
-        image: base-scrapy
+        build: 
+            context: ./db
+        restart: always
         ports: 
-            - "2345:5432"
+            - "5432:5432"
         volumes: 
             - "./db/.dbdata:/var/lib/postgresql/data"
         environment:
@@ -12,9 +14,23 @@ services:
             POSTGRES_PASSWORD: postgres 
             POSTGRES_DB: codeworkers 
 
-    app:
-        image: spider
+    spiders:
+        build: 
+            context: ./crawler
         restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres 
+            POSTGRES_PASSWORD: postgres 
+            POSTGRES_DB: codeworkers 
+        depends_on:
+            - db 
+
+    app:
+        build: 
+            context: ./api
+        restart: always
+        ports: 
+            - "3000:3000"
         environment:
             POSTGRES_USER: postgres 
             POSTGRES_PASSWORD: postgres 
