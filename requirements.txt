@@ -1,4 +1,0 @@
-scrapy
-ipython
-sqlalchemy
-psycopg2

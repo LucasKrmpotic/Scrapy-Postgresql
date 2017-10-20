@@ -1,7 +1,0 @@
-scrapy
-ipython
-sqlalchemy
-psycopg2
-urllib3
-ipdb
-ipython
