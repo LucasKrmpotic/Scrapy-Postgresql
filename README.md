@@ -17,6 +17,8 @@ El proyecto consta de 3 contenedores, uno para cada uno de los siguientes servic
 Correr con
 >docker-conpose up
 
+Luego en `localhost:3000/empleos` podrá chequear el funcionamiento del servicio (endpoints de la api [aquí](api/README.md))
+
 ### El contenedor de la api
 
 Este contenedor corre una aplicación [NodeJS](https://nodejs.org/es/), sin embargo se parte de una [imagen oficial de Debian](https://hub.docker.com/_/debian/) para su construcción, por lo que puede demorar un poco ([vea los detalles](api/README.md)). 
@@ -78,6 +80,20 @@ Probar la versión más realista requiere mímimos cambios que se especifican [a
 └── README.md
 
 ```
+## Límites del proyecto
+Algunas cuestiones de las que esta versión del proyecto no se ocupa son: 
+
+1. No se han gestionado usuarios en los contenedores, ni en la db, ni se ha desarrollado esquema de autenticación y autorización y en la api.
+
+2. No se controlan datos duplicados
+    + Mas allá de mejorar esto en el crawler se debería incorporar procesamiento en la db para esto. Podría ser un trigger before ya que el crawler no debería esperar.
+
+3. Si bien las arañas solo guardan datos de empleos que hayan sido publicados durante el día, no se ha resulelto del todo el problema de cuando parar. Por lo pronto cada araña tiene un limite fijo de items a scrapear con lo cual:
+    * Si se publicaron menos ofertas que el límite se procesa de más (caso mas común)
+    * Si se publicarom más ofertas se pierden datos
+    * Además no en todos los sitios los datos se muestran ordenados de reciente a antiguo en orden de aparición
+    * Todo esto limita la planificación de cron ya que si se ejecuta una sola vez al día es sumamente probable que se pierdan datos pero si se ejecuta más de una vez no hay duda de que habrá muchos datos duplicados (caso más común)
+
 ### En este proyecto se ha usado
 * [Docker](https://www.docker.com/)
 * [Postgresql](https://www.postgresql.org/)

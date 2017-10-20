@@ -93,7 +93,7 @@ class OfertaEmpleo(DeclarativeBase):
 >Al atributo `ubicación` se le define un valor por defecto por no estar resuelto el parseo xpath en uno de los sitios.  
 
 Nota:
->*Si bien el crawler trabaja con un ORM la api no, con lo cual no es trivial combiar el DBMS*.
+>*Si bien el crawler trabaja con un ORM la api no, con lo cual no es trivial cambiar el DBMS*.
 
 En caso de querer crear la tabla `oferta_empleo` manualmente comentar la linea `create_oferta_empleo_table(engine)` en el constructor de la clase [CodeworkersPipeline](codeworkers/pipelines.py) encargada de la exportacion de los objetos [item](codeworkers/item.py) (docs sobre [ItemExporters](https://doc.scrapy.org/en/latest/topics/exporters.html)).
 
