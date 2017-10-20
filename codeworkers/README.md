@@ -23,6 +23,7 @@ Por lo tanto, para probar la version con tareas programadas:
 >docker rmi scrapypostgresql_spiders
 3. Defina el tiempo de la tarea en el archivo [crontab](crontab)
 4. Descomente la linea `restart: unless-stopped` del archivo [docker-comose.yml](docker-compose.yml)
+5. Descomente y comente las líneas apropiadas en el [Dockerfile](Dockerfile)
 
 ## Requisitos en caso de correr fuera del contenedor
 
