@@ -14,8 +14,14 @@ COPY . .
 RUN pip install -r requirements.txt
 
 CMD ["cron", "&&", "tail", "-f", "/var/log/scrapy-cron.log"]
-# CMD ["/etc/init.d/cron", "restart"]
 
 # para probar el funcionamiento inmediato de docker-compose up comentar 
-# lineas anteriores y descomentar la siguiente
-# CMD ["bash", "cron-job.sh"]
+# lineas anteriores y descomentar las siguientes
+
+# FROM python
+# RUN apt-get update -q
+# ADD scrapy-crawl.sh .
+# RUN chmod 750 scrapy-crawl.sh
+# COPY . .
+# RUN pip install -r requirements.txt
+# CMD ["bash", "scrapy-crawl.sh"]

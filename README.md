@@ -1,41 +1,88 @@
 # Codeworkers 
-## Un proyecto para los laburantes del codigo
+### Un proyecto para los laburantes del código
 
-### Objetivo
+## Descripcion
 
-La intención de este proyecto es poner en marcha una aplicación que permita a los programadores que buscan trabajar en Argentina, tener un sitio de referencia que centralice las ofertas de empleo naturalmente distribuidas en multiples sitios. 
+La intención de este proyecto es poner en marcha un servicio que permita a los programadores que buscan trabajar en Argentina, tener un sitio de referencia que centralice las ofertas de empleo naturalmente distribuidas en multiples sitios. 
 
 La aplicacion simplemente muestra datos resumidos de las ofertas de empleo (título, empresa, ubicación, etc) y el link al sitio donde fue publicada originalmente a fin de poder acceder a sus datos detallados y eventualmente postularse y/o enviar CV.
 
-### Estructura del proyecto
+## Consideraciones sobre los contenedores
 
-* **codeworkers (crawler)**
+El proyecto consta de 3 contenedores, uno para cada uno de los siguientes servicios
+* **Base de datos** - [Dockerfile](db/Dockerfile)
+* **Crawler** - [Dockerfile](codeworkers/Dockerfile)
+* **Api** - [Dockerfile](api/Dockerfile)
 
-    Se encarga de extraer datos de ofertas de empleo para programadores de diferentes sitios web.
+Correr con
+>docker-conpose up
 
-    Actualmente los siguientes:
-    * bumeran.com.ar
-    * computrabajo.com.ar
-    * lawebdelprogramador.com
-    * stackoverflow.com/jobs
-    * zonajobs.com.ar
+### El contenedor de la api
 
-    [Detalles del crawler](/codeworkers/README.md)
+Este contenedor corre una aplicación [NodeJS](https://nodejs.org/es/), sin embargo se parte de una [imagen oficial de Debian](https://hub.docker.com/_/debian/) para su construcción, por lo que puede demorar un poco ([vea los detalles](api/README.md)). 
 
-* **api**
+### El contenedor del crawler
 
-    Se encarga de gestionar los datos con los que el crawler va poblando la base de datos. 
+En el archivo [Dockerfile](codeworkers/Dockerfile) de este contenedor hay dos versiones para crear el servicio. Por la lógica del proyecto el crawling debe ejecutarse a intervalos regulares para lo que se utiliza [cron](http://crontab.org/). Sin embargo esto puede ser molesto para las pruebas de manera que por defecto el crawling se hará una sola vez y el contenedor morirá. 
 
-    Por el momento su unica funcionalidad es mostrar todas las ofertas de trabajo o una en particular.
-
-    [Detalles de la api](/api/README.md)
-
-* **db**
-
-    Define la construcción del contenedor de la base de datos.
-
-    [Detalles de la db](/db/README.md)
+Probar la versión más realista requiere mímimos cambios que se especifican [aquí](codeworkers/README.md) 
 
 
+## Estructura del proyecto
 
+```
+├── api
+│   ├── app
+│   │   ├── app.js
+│   │   ├── controllers
+│   │   │   └── index_controller.js
+│   │   ├── router.js
+│   │   └── views
+│   │       ├── error.jade
+│   │       ├── index.jade
+│   │       └── layout.jade
+│   ├── config
+│   │   ├── config.json
+│   │   └── env.js
+│   ├── Dockerfile
+│   ├── gulpfile.babel.js
+│   ├── package.json
+│   ├── README.md
+│   └── server.js
+├── codeworkers
+│   ├── codeworkers
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   ├── middlewares.py
+│   │   ├── models.py
+│   │   ├── pipelines.py
+│   │   ├── settings.py
+│   │   └── spiders
+│   │       ├── bumeran.py
+│   │       ├── computrabajo.py
+│   │       ├── __init__.py
+│   │       ├── lawebdelprogramador.py
+│   │       ├── stackoverflow.py
+│   │       └── zonajobs.py
+│   ├── crontab
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── scrapy.cfg
+│   └── scrapy-crawl.sh
+├── db
+│   ├── Dockerfile
+│   ├── README.md
+│   └── setup-database.sh
+├── docker-compose.yml
+└── README.md
 
+```
+### En este proyecto se ha usado
+* [Docker](https://www.docker.com/)
+* [Postgresql](https://www.postgresql.org/)
+* [Scrapy](https://scrapy.org/)
+* [Cron](http://crontab.org/)
+* [SQLAlchemy](https://www.sqlalchemy.org/)
+* [NodeJS](https://nodejs.org/es/)
+* [node-postgres](https://node-postgres.com/)

@@ -17,7 +17,7 @@ services:
     spiders:
         build: 
             context: ./codeworkers
-        restart: unless-stopped
+        # restart: unless-stopped
         environment:
             POSTGRES_USER: postgres 
             POSTGRES_PASSWORD: postgres 

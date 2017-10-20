@@ -1,7 +1,7 @@
-## Detalles de la db
+# Detalles de la db
 
-* DBMS: postgres
-* Imagen de docker: https://hub.docker.com/_/postgres/
+* DBMS [postgres](https://www.postgresql.org/)
+* Docker [image](https://hub.docker.com/_/postgres/) 
 
 Para setup de la base de datos se utilizó un script en bash que setea el servidor de base de datos utilizando las variables de ambiente que se le hayan pasado al momento de crear el contenedor. Esto es:
 
