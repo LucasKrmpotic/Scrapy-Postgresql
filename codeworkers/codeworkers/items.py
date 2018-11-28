@@ -9,8 +9,7 @@ def parse_fecha(value):
     # datetime.datetime(fecha.year, fecha.month, fecha.day, tzinfo=datetime.timezone.utc)
     
 class CodeworkersItem(Item):
-    """ Define los atributos de un item
-    """
+    """ Define los atributos de un item """
     titulo =Field(
         input_processor=MapCompose(remove_tags),
         output_processor=Join(),
